@@ -1,0 +1,65 @@
+apply plugin: 'java'
+apply plugin: 'groovy'
+apply plugin: 'maven-publish'
+apply plugin: 'java-gradle-plugin'
+
+
+//plugins {
+//    id 'java'
+//    id 'groovy'
+//    id 'maven-publish'
+//    id 'java-gradle-plugin'
+//}
+
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_1_8
+    targetCompatibility = JavaVersion.VERSION_1_8
+}
+
+
+dependencies {
+    // gradle sdk
+    implementation gradleApi()
+
+    // groovy sdk
+    implementation localGroovy()
+}
+
+
+apply plugin: 'maven-publish'
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            // dependencies on buildscript section: groupId:artifactId:version
+            groupId 'com.best'
+            artifactId 'daddy'
+            version '1.0.0'
+
+            from components.java
+        }
+    }
+}
+
+def user_home = System.properties['user.home']
+
+publishing {
+    repositories {
+        maven {
+            // the local repo location for publish to 
+            url uri("${user_home}/Downloads/maven-repo")
+        }
+    }
+}
+
+gradlePlugin {
+    plugins {
+        iGroovyGradlePluginTemplate {
+            id = "iGroovyGradlePluginTemplate"
+            implementationClass = "com.best.GradlePluginExt"
+            version = "1.2.0"
+        }
+    }
+}
+

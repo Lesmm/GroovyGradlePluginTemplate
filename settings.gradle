@@ -1,0 +1,23 @@
+pluginManagement {
+    repositories {
+        google()
+        mavenCentral()
+        gradlePluginPortal()
+
+        /// >>>>> Usage code A:
+        maven {
+            url uri("${System.properties['user.home']}/Downloads/maven-repo")
+        }
+    }
+}
+dependencyResolutionManagement {
+    repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
+    repositories {
+        google()
+        mavenCentral()
+    }
+}
+
+rootProject.name = "GroovyGradlePluginTemplate"
+include ':app'
+include ':module'
